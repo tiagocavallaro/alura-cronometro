@@ -1,29 +1,21 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Item from './item';
 import style from './list.module.scss';
+import { IItems } from '../../types/items';
 
-function List () {
-    const [items, setItems] = useState([{
-        task: 'React',
-        time: '02:00:00'
-    },
-    {
-        task: 'JavaScript',
-        time: '01:00:00'   
-    },
-    {
-        task: 'TypeScript',
-        time: '01:30:00'   
-    }]);
+interface Props {
+    items : IItems[],
+    selectItem : (selectedItem: IItems) => void
+}
+function List ({items, selectItem} : Props ) {
     return(
         <aside className={style.ListaTarefas}>
-            <h2 onClick={() =>{
-               setItems([...items, {task: 'PHP', time: '00:30:00'}]);  
-            }}>Estudos do dia</h2>
+            <h2>Estudos do dia</h2>
             <ul>
-                {items.map((items, index) => (
-                    <Item 
-                    key={index}
+                {items.map((items) => (
+                    <Item
+                    selectItem={selectItem} 
+                    key={items.id}
                       {...items}
                     />
                 ))}
